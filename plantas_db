@@ -1,0 +1,166 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Tempo de geração: 26/11/2025 às 23:00
+-- Versão do servidor: 10.4.32-MariaDB
+-- Versão do PHP: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Banco de dados: `plantas_db`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `cuidados`
+--
+
+CREATE TABLE `cuidados` (
+  `id` int(11) NOT NULL,
+  `usuario_id` int(11) DEFAULT NULL,
+  `planta_id` int(11) DEFAULT NULL,
+  `tipo_cuidado` varchar(100) NOT NULL,
+  `frequencia` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `cuidados`
+--
+
+INSERT INTO `cuidados` (`id`, `usuario_id`, `planta_id`, `tipo_cuidado`, `frequencia`) VALUES
+(15, 51, 17, 'Regar planta', 7);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `plantas`
+--
+
+CREATE TABLE `plantas` (
+  `id` int(11) NOT NULL,
+  `nome_cientifico` varchar(150) NOT NULL,
+  `nome_popular` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `plantas`
+--
+
+INSERT INTO `plantas` (`id`, `nome_cientifico`, `nome_popular`) VALUES
+(17, 'samambaia_samambas', 'samambaia');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `usuarioadm`
+--
+
+CREATE TABLE `usuarioadm` (
+  `id` int(11) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `senha_hash` varchar(255) NOT NULL,
+  `tipo` enum('usuario','cuidado') NOT NULL DEFAULT 'usuario'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `usuarioadm`
+--
+
+INSERT INTO `usuarioadm` (`id`, `username`, `senha_hash`, `tipo`) VALUES
+(1, 'admin', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 'usuario');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `usuarios`
+--
+
+CREATE TABLE `usuarios` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `nome`, `email`) VALUES
+(51, 'pedro1', 'pedro154@hotmail.com');
+
+--
+-- Índices para tabelas despejadas
+--
+
+--
+-- Índices de tabela `cuidados`
+--
+ALTER TABLE `cuidados`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `usuario_id` (`usuario_id`),
+  ADD KEY `planta_id` (`planta_id`);
+
+--
+-- Índices de tabela `plantas`
+--
+ALTER TABLE `plantas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices de tabela `usuarioadm`
+--
+ALTER TABLE `usuarioadm`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
+-- Índices de tabela `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- AUTO_INCREMENT para tabelas despejadas
+--
+
+--
+-- AUTO_INCREMENT de tabela `cuidados`
+--
+ALTER TABLE `cuidados`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT de tabela `plantas`
+--
+ALTER TABLE `plantas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT de tabela `usuarioadm`
+--
+ALTER TABLE `usuarioadm`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de tabela `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
